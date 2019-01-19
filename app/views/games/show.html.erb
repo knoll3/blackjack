@@ -1,0 +1,24 @@
+<!-- Application Header -->
+<div id="header">
+	<div class="logo">
+		BLACKJACK		
+	</div>
+</div>
+
+<!-- Main Section -->
+<div id="main">
+	<div id="deck"   style="float:left; margin:100px; color:white"></div>
+	<div id="dealer" style="float:left; margin:100px; color:white"></div>
+	<div id="player" style="float:left; margin:100px; color:white"></div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		$.get(`/games/${<%= @game.id %>}/cards`).success(function(data) {
+			$.each(data, function(index, card) {
+				var li_element = $(`<li>${card.rank}</li>`);
+				li_element.appendTo('#deck');
+			});
+		});
+	});
+</script>
