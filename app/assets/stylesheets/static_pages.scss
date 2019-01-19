@@ -1,0 +1,29 @@
+body {
+	margin: 0;
+	padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+#header {
+	background: #333;	
+	text-align: center;
+	color: white;
+	padding: 10px;
+	font-size: 28px;
+	font-weight: bold;
+	box-shadow: 0px 20px 44px -8px rgba(0,0,0,0.75);
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#main {
+	background: url("green_felt.jpg");
+	position: absolute;
+	top: 52px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
