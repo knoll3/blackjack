@@ -26,4 +26,20 @@ body {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	text-align: center;
+}
+
+button {
+	margin: 150px;
+  background-color: #666;
+  border: none;
+  color: white;
+  padding: 30px 64px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 15px;
 }
