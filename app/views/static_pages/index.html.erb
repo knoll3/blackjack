@@ -7,4 +7,7 @@
 
 <!-- Main Section -->
 <div id="main">
+	<%= form_for @game do |f| %>
+		<%= f.submit "PLAY!", id: "create-game" %>
+	<% end %>
 </div>
