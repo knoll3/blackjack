@@ -1,3 +1,65 @@
-// Place all the styles related to the games controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#deck {
+	position: absolute;
+	top: 2%;
+	right: 1%;
+	height: 50px;
+	line-height: 50px;
+	width: 100px;
+	border: 1px solid black;
+}
+
+#deck span {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#dealer {
+	position: absolute;
+	top: 5%;
+	height: 300px;
+	width: 800px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid black;
+}
+
+#player {
+	position: absolute;
+	bottom: 15%;
+	height: 300px;
+	width: 800px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid black;
+}
+
+#hit-button {
+	position: absolute;
+	top: 40%;
+	height: 100px;
+	width: 100px;
+	left: 15%;
+	border: 1px solid black;
+}
+
+#stand-button {
+	position: absolute;
+	top: 40%;
+	height: 100px;
+	width: 100px;
+	right: 15%;
+	border: 1px solid black;
+}
+
+#statistics {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	height: 400px;
+	width: 200px;
+	border: 1px solid black;
+}
