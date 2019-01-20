@@ -10,7 +10,7 @@ class Game < ApplicationRecord
 		2.times do 
 			suits.each do |suit|
 				ranks.each do|rank|
-					deck << {rank: rank, suit: suit, held_by: "dealer", face_up: true}
+					deck << {rank: rank, suit: suit, held_by: "deck", face_up: true}
 				end
 			end
 		end
