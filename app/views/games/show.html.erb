@@ -105,22 +105,30 @@
 		}
 
 		function playerDrawCard() {
-			card = deck.pop();
-			playerCards.push(card);
-			displayPlayerHand();
-			displayDeckCount();
+			if (deck.length > 0) {
+				card = deck.pop();
+				playerCards.push(card);
+				displayPlayerHand();
+				displayDeckCount();
+			} else {
+				endGame();
+			}
 		}
 
 		function dealerDrawCard(state = "faceUp") {
-			var card = deck.pop();
-			if (state == "faceDown") {
-				card.faceUp = false;
+			if (deck.length > 0) {
+				var card = deck.pop();
+				if (state == "faceDown") {
+					card.faceUp = false;
+				} else {
+					card.faceUp = true;
+				}
+				dealerCards.push(card);
+				displayDealerHand();
+				displayDeckCount();
 			} else {
-				card.faceUp = true;
+				endGame();
 			}
-			dealerCards.push(card);
-			displayDealerHand();
-			displayDeckCount();
 		}
 
 		function createDeck() {
@@ -283,27 +291,24 @@
 				revealHoleCard();
 				while (countHand(dealerCards) < countHand(playerCards)) {
 					dealerDrawCard();
-					var dealerCount = countHand(dealerCards);
-					var playerCount = countHand(playerCards);
-					if (dealerCount > 21) {
-						console.log(`Dealer count > 21. Dealer busts. Dealer: ${dealerCount}; Player: ${playerCount}`);
+					console.log('Dealer: ' + countHand(dealerCards) + '; Player: ' + countHand(playerCards));
+					if (countHand(dealerCards) > 21) {
 						winRound();
 						return;
-					// } else if (dealerCount > playerCount) {
-					// 	console.log("Dealer has higher score than plaer. Dealer wins.");
-					// 	loseRound();
-					// 	return;
-					} else if (dealerCount == playerCount) {
-						console.log(`Player and dealer have the same score. It's a push. Dealer: ${dealerCount}; Player: ${playerCount}`);
+					} else if (countHand(dealerCards) == countHand(playerCards)) {
 						push();
 						return;
-					}
+					} 
 				}
-				console.log(`Dealer has a higher score than player. Dealer wins. Dealer: ${countHand(dealerCards)}; Player: ${countHand(playerCards)}`);
 				loseRound();
+				return;
 			} else {
 				console.log("Cannot stand if player has lower count than dealer.");
 			}
+		}
+
+		function endGame() {
+			console.log("game over");
 		}
 
 	// Main
