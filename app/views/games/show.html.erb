@@ -90,6 +90,22 @@
 	// Card functions
 
 		function dealCards() {
+
+			if (deck.length < 52) {
+				console.log("Shuffling Deck");
+				deck = [];
+				deck = createDeck();
+				var miscElement = $(`
+					<div id="misc-banner">
+						<h1 id="misc-message">Shuffling Deck</h1>
+					</div>
+				`);
+				miscElement.appendTo('#dealer');			
+				setTimeout(function() {
+					miscElement.remove();
+				}, 1000)
+			}
+
 			playerDrawCard();
 			dealerDrawCard('faceDown');
 			playerDrawCard();
@@ -105,30 +121,22 @@
 		}
 
 		function playerDrawCard() {
-			if (deck.length > 0) {
-				card = deck.pop();
-				playerCards.push(card);
-				displayPlayerHand();
-				displayDeckCount();
-			} else {
-				endGame();
-			}
+			card = deck.pop();
+			playerCards.push(card);
+			displayPlayerHand();
+			displayDeckCount();
 		}
 
 		function dealerDrawCard(state = "faceUp") {
-			if (deck.length > 0) {
-				var card = deck.pop();
-				if (state == "faceDown") {
-					card.faceUp = false;
-				} else {
-					card.faceUp = true;
-				}
-				dealerCards.push(card);
-				displayDealerHand();
-				displayDeckCount();
+			var card = deck.pop();
+			if (state == "faceDown") {
+				card.faceUp = false;
 			} else {
-				endGame();
+				card.faceUp = true;
 			}
+			dealerCards.push(card);
+			displayDealerHand();
+			displayDeckCount();
 		}
 
 		function createDeck() {
@@ -295,10 +303,11 @@
 					if (countHand(dealerCards) > 21) {
 						winRound();
 						return;
-					} else if (countHand(dealerCards) == countHand(playerCards)) {
-						push();
-						return;
 					} 
+				}
+				if (countHand(dealerCards) == countHand(playerCards)) {
+					push();
+					return;
 				}
 				loseRound();
 				return;

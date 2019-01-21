@@ -111,7 +111,7 @@
 	position: absolute;
 }
 
-#win-banner, #lose-banner, #push-banner {
+#win-banner, #lose-banner, #push-banner, #misc-banner {
 	position: absolute;
 	top: 30%;
 	left: 0;
@@ -123,7 +123,8 @@
 	padding: 25px;
 }
 
-#win-message, #lose-message, #push-message {
+#win-message, #lose-message, #push-message, #misc-message {
+	white-space: nowrap;
 	text-align: center;
 	margin: 0;
 	font-size: 48px;
