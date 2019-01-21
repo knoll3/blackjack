@@ -85,10 +85,20 @@
 
 #statistics {
 	position: absolute;
-	top: 10px;
-	left: 10px;
+	top: 100px;
+	left: 50px;
 	height: 400px;
 	width: 200px;
+}
+
+#statistics h3 {
+	white-space: nowrap;
+	font-size: 28px;
+}
+
+#statistics td {
+	font-size: 16px;
+	padding-left: 20px;
 }
 
 .card {
@@ -100,7 +110,6 @@
 	margin-top: 50px;
 	position: absolute;
 }
-
 
 #win-banner, #lose-banner, #push-banner {
 	position: absolute;
@@ -119,3 +128,4 @@
 	margin: 0;
 	font-size: 48px;
 }
+

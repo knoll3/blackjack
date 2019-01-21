@@ -28,7 +28,28 @@
 	<div id="stand">
 		<button id="stand-button">Stand</button>
 	</div>
-	<div id="statistics"></div>
+	<div id="statistics">
+		<h3>Game Statistics</h3>
+		<table>
+			<tr>
+				<td><b>Wins:</b></td>
+				<td id="wins"></td>
+			</tr>
+			<tr>
+				<td><b>Losses:</b></td>
+				<td id="losses"></td>
+			</tr>
+			<tr>
+				<td><b>Pushes:</b></td>
+				<td id="pushes"></td>
+			</tr>
+			<tr>
+				<td><b>Win Rate:</b></td>
+				<td id="win-rate"></td>
+			</tr>
+
+		</table>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -74,6 +95,7 @@
 			playerDrawCard();
 			dealerDrawCard();
 
+			// Adjust button display
 			$('#win-banner').remove();
 			$('#lose-banner').remove();
 			$('#push-banner').remove();
@@ -197,7 +219,6 @@
 
 		function loseRound() {
 			losses += 1;
-			console.log('You lose');
 			newRound();
 			var loseElement = $(`
 				<div id="lose-banner">
@@ -210,7 +231,6 @@
 
 		function winRound() {
 			wins += 1;
-			console.log('You win');
 			newRound();
 			var winElement = $(`
 				<div id="win-banner">
@@ -222,7 +242,7 @@
 
 
 		function push() {
-			console.log("push");
+			pushes += 1;
 			newRound();
 			var pushElement = $(`
 				<div id="push-banner">
@@ -240,6 +260,17 @@
 			$('#hit-button').toggle();
 			$('#stand-button').toggle();
 			$('#deal-button').toggle();
+
+			var gamesPlayed = wins + losses + pushes;
+			if (gamesPlayed == 0) {
+				winRate = 0;
+			} else {
+				winRate = (wins / (wins + losses)).toFixed(2);
+			}
+			$('#wins').text(wins);
+			$('#losses').text(losses);
+			$('#pushes').text(pushes);
+			$('#win-rate').text(`${winRate * 100}%`);
 		}
 
 		function revealHoleCard() {
@@ -255,16 +286,20 @@
 					var dealerCount = countHand(dealerCards);
 					var playerCount = countHand(playerCards);
 					if (dealerCount > 21) {
+						console.log(`Dealer count > 21. Dealer busts. Dealer: ${dealerCount}; Player: ${playerCount}`);
 						winRound();
 						return;
-					} else if (dealerCount > playerCount) {
-						loseRound();
-						return;
+					// } else if (dealerCount > playerCount) {
+					// 	console.log("Dealer has higher score than plaer. Dealer wins.");
+					// 	loseRound();
+					// 	return;
 					} else if (dealerCount == playerCount) {
+						console.log(`Player and dealer have the same score. It's a push. Dealer: ${dealerCount}; Player: ${playerCount}`);
 						push();
 						return;
 					}
 				}
+				console.log(`Dealer has a higher score than player. Dealer wins. Dealer: ${countHand(dealerCards)}; Player: ${countHand(playerCards)}`);
 				loseRound();
 			} else {
 				console.log("Cannot stand if player has lower count than dealer.");
@@ -276,8 +311,21 @@
 		var marginLeft = 100;
 		var dealerCards = [];
 		var playerCards = [];
+
 		var wins = 0;
 		var losses = 0;
+		var pushes = 0;
+		var gamesPlayed = wins + losses + pushes;
+		if (gamesPlayed == 0) {
+			winRate = 0;
+		} else {
+			winRate = (wins / (wins + losses)).toFixed(2);
+		}
+
+		$('#wins').text(wins);
+		$('#losses').text(losses);
+		$('#pushes').text(pushes);
+		$('#win-rate').text(`${winRate * 100}%`);
 
 		$('#hit-button').toggle();
 		$('#stand-button').toggle();
