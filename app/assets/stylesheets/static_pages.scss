@@ -2,6 +2,7 @@ body {
 	margin: 0;
 	padding: 0;
   font-family: 'Ubuntu', sans-serif;
+  overflow-x: hidden;
 }
 
 #header {
@@ -26,6 +27,7 @@ body {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	color: white;
 	text-align: center;
 }
 
@@ -42,4 +44,8 @@ body {
   font-weight: bold;
   cursor: pointer;
   border-radius: 15px;
+	border: 2px solid white;
+	border-radius: 30px;
+	box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.75);
 }
+
