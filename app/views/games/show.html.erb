@@ -12,8 +12,12 @@
 		<span>X</span>
 	</div>
 	<div id="dealer">
+		<div id="dealer-cards"></div>
+		<div id="dealer-count"></div>
 	</div>
 	<div id="player">
+		<div id="player-cards"></div>
+		<div id="player-count"></div>
 	</div>
 	<div id="deal">
 		<button id="deal-button">Deal</button>
@@ -22,7 +26,7 @@
 		<button id="hit-button">Hit</button>
 	</div>
 	<div id="stand">
-		<!-- <button id="stand-button">Stand</button> -->
+		<button id="stand-button">Stand</button>
 	</div>
 	<div id="statistics"></div>
 </div>
@@ -71,12 +75,14 @@
 			playerDrawCard();
 			$('#deal-button').toggle();
 			$('#hit-button').toggle();
+			$('#stand-button').toggle();
 		}
 
 		function playerDrawCard() {
 			card = deck.pop();
 			playerCards.push(card);
 			displayPlayerHand();
+			displayDeckCount();
 		}
 
 		function dealerDrawCard(state = "faceUp") {
@@ -88,6 +94,7 @@
 			}
 			dealerCards.push(card);
 			displayDealerHand();
+			displayDeckCount();
 		}
 
 		function createDeck() {
@@ -106,10 +113,28 @@
 			return(deck);
 		}
 
+		function countHand(hand) {
+
+			var count = 0;
+			var countIndex = {
+				"2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10,
+				"jack": 10, "queen": 10, "king": 10, "ace": 11
+			};
+
+			$.each(hand, function(index, card) {
+				if (card.faceUp) {
+					count += countIndex[card.rank];
+				}
+			});
+
+			return(count);
+
+		}
+
 	// Display functions
 
 		function displayDealerHand() {
-			$('#dealer').empty();
+			$('#dealer-cards').empty();
 			$.each(dealerCards, function(index, card) {
 				if (card.faceUp) {
 					var cardElement = $(
@@ -124,38 +149,101 @@
 									style='left:${(50*index)+marginLeft}px'>`
 					);
 				}
-				cardElement.appendTo('#dealer');	
+				cardElement.appendTo('#dealer-cards');	
 			});
+			displayDealerHandCount();
 		}
 
 		function displayPlayerHand() {
-			$('#player').empty();
+			$('#player-cards').empty();
 			$.each(playerCards, function(index, card) {
 				var cardElement = $(
 					`<img class='card' 
 								src="/assets/cards/${card.rank}_of_${card.suit}.png" 
 								style='left:${(50*index)+marginLeft}px'>`
 				);
-				cardElement.appendTo('#player');
+				cardElement.appendTo('#player-cards');
 			});
+			displayPlayerHandCount();
 		}
 
 		function displayDeckCount() {
 			$('#deck-count').text(deck.length);
 		}
 
+		function displayPlayerHandCount() {
+			var count = countHand(playerCards);
+			$('#player-count').text(count);
+		}
 
+		function displayDealerHandCount() {
+			var count = countHand(dealerCards);
+			$('#dealer-count').text(count);
+		}
+
+		function loseRound() {
+			losses += 1;
+			console.log('You lose');
+			newRound();
+		}
+
+		function winRound() {
+			wins += 1;
+			console.log('You win');
+			newRound();
+		}
+
+		function push() {
+			console.log("push");
+			newRound();
+		}
+
+		function newRound() {
+			console.log('------- Next Round -------')
+			dealerCards = [];
+			playerCards = [];
+			$('#hit-button').toggle();
+			$('#stand-button').toggle();
+			$('#deal-button').toggle();
+		}
+
+		function revealHoleCard() {
+			dealerCards[0].faceUp = true;
+			displayDealerHand();
+		}
+
+		function endGame() {
+			revealHoleCard();
+			while (countHand(dealerCards) <= countHand(playerCards)) {
+				dealerDrawCard();
+				var dealerCount = countHand(dealerCards);
+				var playerCount = countHand(playerCards);
+				if (dealerCount > 21) {
+					winRound();
+					return;
+				} else if (dealerCount > playerCount) {
+					loseRound();
+					return;
+				} else if (dealerCount == playerCount) {
+					push();
+					return;
+				}
+			}
+			loseRound();
+		}
 
 	// Main
 
 		var marginLeft = 100;
 		var dealerCards = [];
 		var playerCards = [];
+		var wins = 0;
+		var losses = 0;
 
 		$('#hit-button').toggle();
+		$('#stand-button').toggle();
 
 		var deck = createDeck();
-		console.log(deck);
 
 		// Deal button
 		$('#deal-button').click(function() {
@@ -165,8 +253,17 @@
 		// Hit button
 		$('#hit-button').click(function() {
 			playerDrawCard();
+			if (countHand(playerCards) > 21) {
+				console.log("bust");
+				loseRound();
+			}
 		});
 
+		$('#stand-button').click(function() {
+
+			endGame();
+
+		});
 	});
 </script>
 

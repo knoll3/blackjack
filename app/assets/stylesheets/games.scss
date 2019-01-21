@@ -26,6 +26,13 @@
 	border: 1px solid black;
 }
 
+#dealer-count, #player-count{
+	position: absolute;
+	top: 40%;
+	right: 50px;
+	font-size: 36px;
+}
+
 #player {
 	position: absolute;
 	bottom: 15%;
