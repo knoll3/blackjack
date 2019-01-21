@@ -1,21 +1,25 @@
 <!-- Application Header -->
 <div id="header">
 	<div class="logo">
-		BLACKJACK		
+		BLACK JACK		
 	</div>
 </div>
 
 <!-- Main Section -->
 <div id="main">
 	<div id="deck">
-		<span id="deck-count"></span>
-		<span>X</span>
+		<b>Deck</b>
+		<br>
+		<span id="deck-count">0</span>
+		<span>🃟</span>
 	</div>
 	<div id="dealer">
+		<h3>Dealer</h3>
 		<div id="dealer-cards"></div>
 		<div id="dealer-count"></div>
 	</div>
 	<div id="player">
+		<h3>You</h3>
 		<div id="player-cards"></div>
 		<div id="player-count"></div>
 	</div>
@@ -322,7 +326,7 @@
 
 	// Main
 
-		var marginLeft = 100;
+		var marginLeft = 200;
 		var dealerCards = [];
 		var playerCards = [];
 
