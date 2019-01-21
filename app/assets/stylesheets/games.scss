@@ -6,7 +6,6 @@
 	height: 50px;
 	line-height: 50px;
 	width: 100px;
-	border: 1px solid black;
 }
 
 #deck span {
@@ -23,7 +22,6 @@
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	border: 1px solid black;
 }
 
 #dealer-count, #player-count{
@@ -42,7 +40,6 @@
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	border: 1px solid black;
 }
 
 #deal {
@@ -54,7 +51,6 @@
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	border: 1px solid black;
 	text-align: center;
 }
 
@@ -64,7 +60,6 @@
 	height: 100px;
 	width: 100px;
 	left: 15%;
-	border: 1px solid black;
 	text-align: center;
 }
 
@@ -76,7 +71,6 @@
 	background: #4286f4;
 	color: white;
 	border: none;
-	border-radius: 15px;
 	cursor: pointer;
 	text-decoration: none;
 }
@@ -87,7 +81,6 @@
 	height: 100px;
 	width: 100px;
 	right: 15%;
-	border: 1px solid black;
 }
 
 #statistics {
@@ -96,7 +89,6 @@
 	left: 10px;
 	height: 400px;
 	width: 200px;
-	border: 1px solid black;
 }
 
 .card {
@@ -107,4 +99,23 @@
 	box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.75);
 	margin-top: 50px;
 	position: absolute;
+}
+
+
+#win-banner, #lose-banner, #push-banner {
+	position: absolute;
+	top: 30%;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	background: rgba(100, 100, 100, 0.7);	
+	width: 450px;
+	padding: 25px;
+}
+
+#win-message, #lose-message, #push-message {
+	text-align: center;
+	margin: 0;
+	font-size: 48px;
 }

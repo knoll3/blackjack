@@ -69,10 +69,14 @@
 	// Card functions
 
 		function dealCards() {
+			playerDrawCard();
 			dealerDrawCard('faceDown');
+			playerDrawCard();
 			dealerDrawCard();
-			playerDrawCard();
-			playerDrawCard();
+
+			$('#win-banner').remove();
+			$('#lose-banner').remove();
+			$('#push-banner').remove();
 			$('#deal-button').toggle();
 			$('#hit-button').toggle();
 			$('#stand-button').toggle();
@@ -195,17 +199,38 @@
 			losses += 1;
 			console.log('You lose');
 			newRound();
+			var loseElement = $(`
+				<div id="lose-banner">
+					<h1 id="lose-message">Dealer Wins</h1>
+				</div>
+			`);
+			loseElement.appendTo('#dealer');
+
 		}
 
 		function winRound() {
 			wins += 1;
 			console.log('You win');
 			newRound();
+			var winElement = $(`
+				<div id="win-banner">
+					<h1 id="win-message">You Win!</h1>
+				</div>
+			`);
+			winElement.appendTo('#player');
 		}
+
 
 		function push() {
 			console.log("push");
 			newRound();
+			var pushElement = $(`
+				<div id="push-banner">
+					<h1 id="push-message">Push</h1>
+				</div>
+			`);
+			pushElement.appendTo('#dealer');
+
 		}
 
 		function newRound() {
@@ -223,7 +248,7 @@
 		}
 
 		function stand() {
-			if (countHand(playerCards) > countHand(dealerCards)) {
+			if (countHand(playerCards) >= countHand(dealerCards)) {
 				revealHoleCard();
 				while (countHand(dealerCards) < countHand(playerCards)) {
 					dealerDrawCard();
