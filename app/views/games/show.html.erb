@@ -116,6 +116,7 @@
 		function countHand(hand) {
 
 			var count = 0;
+			var aceCount = 0;
 			var countIndex = {
 				"2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10,
 				"jack": 10, "queen": 10, "king": 10, "ace": 11
@@ -124,8 +125,17 @@
 			$.each(hand, function(index, card) {
 				if (card.faceUp) {
 					count += countIndex[card.rank];
+					if (card.rank == "ace") {
+						aceCount += 1;
+					}
 				}
 			});
+
+			// Special condition for aces
+			while (count > 21 && aceCount > 0) {
+				count -= 10;
+				aceCount -= 1;
+			}
 
 			return(count);
 
@@ -212,24 +222,28 @@
 			displayDealerHand();
 		}
 
-		function endGame() {
-			revealHoleCard();
-			while (countHand(dealerCards) <= countHand(playerCards)) {
-				dealerDrawCard();
-				var dealerCount = countHand(dealerCards);
-				var playerCount = countHand(playerCards);
-				if (dealerCount > 21) {
-					winRound();
-					return;
-				} else if (dealerCount > playerCount) {
-					loseRound();
-					return;
-				} else if (dealerCount == playerCount) {
-					push();
-					return;
+		function stand() {
+			if (countHand(playerCards) > countHand(dealerCards)) {
+				revealHoleCard();
+				while (countHand(dealerCards) < countHand(playerCards)) {
+					dealerDrawCard();
+					var dealerCount = countHand(dealerCards);
+					var playerCount = countHand(playerCards);
+					if (dealerCount > 21) {
+						winRound();
+						return;
+					} else if (dealerCount > playerCount) {
+						loseRound();
+						return;
+					} else if (dealerCount == playerCount) {
+						push();
+						return;
+					}
 				}
+				loseRound();
+			} else {
+				console.log("Cannot stand if player has lower count than dealer.");
 			}
-			loseRound();
 		}
 
 	// Main
@@ -260,9 +274,7 @@
 		});
 
 		$('#stand-button').click(function() {
-
-			endGame();
-
+			stand();
 		});
 	});
 </script>
