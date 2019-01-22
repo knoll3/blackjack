@@ -36,7 +36,7 @@
 
 		function dealCards() {
 
-			if (deck.length < 52) {
+			if (deck.length < (numberOfDecks*26)) {
 				deck = [];
 				deck = createDeck();
 
@@ -93,9 +93,9 @@
 
 			// Create new deck
 			var deck = [];
-			var suits = ["hearts", "diamonds", "spades", "clubs"];
+			var suits = ["diamonds", "diamonds", "spades", "clubs"];
 			var ranks = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"];
-			for (var i = 2; i > 0; i--) {
+			for (var i = numberOfDecks; i > 0; i--) {
 				$.each(suits, function(index, suit) {
 					$.each(ranks, function(index, rank) {
 						var card = new Card(rank, suit);
@@ -208,6 +208,8 @@
 
 		function loseRound() {
 			losses += 1;
+			playerChipCount -= parseInt(playerBet);
+			console.log(playerChipCount);
 			newRound();
 
 			// Flash the dealer win message
@@ -217,11 +219,16 @@
 				</div>
 			`);
 			loseElement.appendTo('#dealer');
+			setTimeout(function() {
+				playerBet = prompt("How much do you want to bet?");
+			}, 50);
 
 		}
 
 		function winRound() {
 			wins += 1;
+			playerChipCount += parseInt(playerBet);
+			console.log(playerChipCount);
 			newRound();
 
 			// Flash the player win message
@@ -231,6 +238,9 @@
 				</div>
 			`);
 			winElement.appendTo('#player');
+			setTimeout(function() {
+				playerBet = prompt("How much do you want to bet?");
+			}, 50);
 		}
 
 
@@ -261,7 +271,7 @@
 
 			// Update statistics
 			var gamesPlayed = wins + losses + pushes;
-			if (gamesPlayed == 0) {
+			if (wins == 0 && losses == 0) {
 				winRate = 0;
 			} else {
 				winRate = (wins / (wins + losses)).toFixed(2);
@@ -270,6 +280,7 @@
 			$('#losses').text(losses);
 			$('#pushes').text(pushes);
 			$('#win-rate').text(`${winRate * 100}%`);
+
 		}
 
 
@@ -307,16 +318,18 @@
 
 	// Main
 
+		var numberOfDecks = 2;
 		var marginLeft = 200;
 		var dealerCards = [];
 		var playerCards = [];
+		var playerChipCount = 1000;
 
 		// Set up statistics
 		var wins = 0;
 		var losses = 0;
 		var pushes = 0;
 		var gamesPlayed = wins + losses + pushes;
-		if (gamesPlayed == 0) {
+		if (wins == 0 && losses == 0) {
 			winRate = 0;
 		} else {
 			winRate = (wins / (wins + losses)).toFixed(2);
@@ -332,6 +345,8 @@
 
 		// Create deck
 		var deck = createDeck();
+
+		var playerBet = prompt("How much do you want to bet?");
 
 		// Buttons
 
